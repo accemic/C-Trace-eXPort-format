@@ -1,0 +1,78 @@
+= C-Trace eXPort (CTXP)
+:toc:
+:toclevels: 3
+
+CTXP is a unified trace format for exporting processor trace data (control-flow, memory
+accesses, and timing) from single- and multi-core systems.
+
+This repository aims to be a *publication-quality* reference for the CTXP format:
+
+* A readable overview and quick reference
+* Canonical, curated examples
+* A small linter to keep examples consistent
+
+The authoritative specification is included in link:spec/TN_CTXP_Format.pdf[`spec/TN_CTXP_Format.pdf`].
+
+== Quick start
+
+The text format (`.ctxp.txt`) is intended to be grep-able and diff-able.
+
+[source]
+----
+HDR:format=accemic//ctxp-txt,ver=1
+META:#0="CPU0"
+#0:SYNC::0x80000000                      @ 0
+#0:BRANCH_NOTTAKEN:0x80000014:0x80000018 @ 3
+#0:CALL:0x8000001c:0x8000004c            @ 5
+#0:RETURN:0x80000050:0x80000020          @ 17
+----
+
+== Event types (excerpt)
+
+* Control-flow: `SYNC`, `BRANCH_TAKEN`, `BRANCH_NOTTAKEN`, `CALL`, `RETURN`, `INTERRUPT`, `RFI`
+* Memory: `MEMREAD_0/1/2/4/8`, `MEMWRITE_0/1/2/4/8`
+* Other: `OVERFLOW`, `CONTEXT`, `WALLCLOCK`
+
+== Examples
+
+The list below is a small excerpt. See link:examples/[`examples/`] 
+for the full set of curated example traces and explanations.
+
+* link:examples/basic.ctxp.txt[`examples/basic.ctxp.txt`] (+ link:examples/basic.md[explanation])
+* link:examples/dualcore.ctxp.txt[`examples/dualcore.ctxp.txt`] (+ link:examples/dualcore.md[explanation])
+* link:examples/overflow.ctxp.txt[`examples/overflow.ctxp.txt`] (+ link:examples/overflow.md[explanation])
+
+== Documentation
+
+The authoritative format specification is in link:spec/TN_CTXP_Format.pdf[`spec/TN_CTXP_Format.pdf`].
+
+Repository-specific documentation (examples + tooling):
+
+* link:examples/README.adoc[Examples]
+
+== Tooling (Accemic)
+
+Accemic provides a CTXP exporter/decoder tool for converting native hardware trace formats to CTXP and
+consuming CTXP in analyzers.
+
+Common native trace formats supported include:
+
+* RISC-V Nexus traces
+* Arm CoreSight ETMv4
+* Arm CoreSight PFT
+* Infineon TriCore MCDS (TC2/TC3/TC4)
+
+Accemic also has a NexRv adaptation (based on
+https://github.com/riscv-non-isa/tg-nexus-trace/tree/main/refcode/c) that supports CTXP output; it will
+be published soon.
+
+If you want to evaluate or integrate CTXP tooling, please contact us:
+
+* https://accemic.com/contact/
+
+== License / attribution / acknowledgement
+
+The included technical note (`spec/TN_CTXP_Format.pdf`) states it is licensed under
+Creative Commons Attribution 4.0 International (CC BY 4.0). See the PDF for details.
+
+The CTXP format was developed as part of the TRISTAN project, a European Union research initiative involving 46 partners to advance the RISC-V ecosystem. See https://tristan-project.eu/ for more information.

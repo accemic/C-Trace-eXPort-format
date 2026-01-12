@@ -1,0 +1,32 @@
+
+overflow.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+80000000 <_start>:
+80000000:	00000e17          	auipc	t3,0x0
+80000004:	040e0e13          	add	t3,t3,64 # 80000040 <hang>
+80000008:	305e1073          	csrw	mtvec,t3
+8000000c:	3e800293          	li	t0,1000
+80000010:	00000397          	auipc	t2,0x0
+80000014:	00838393          	add	t2,t2,8 # 80000018 <loop_start>
+
+80000018 <loop_start>:
+80000018:	fff28293          	add	t0,t0,-1
+8000001c:	00028463          	beqz	t0,80000024 <loop_done>
+80000020:	00038067          	jr	t2
+
+80000024 <loop_done>:
+80000024:	00000097          	auipc	ra,0x0
+80000028:	014080e7          	jalr	20(ra) # 80000038 <overflow_func>
+8000002c:	00000513          	li	a0,0
+80000030:	05d00893          	li	a7,93
+80000034:	00000073          	ecall
+
+80000038 <overflow_func>:
+80000038:	05500513          	li	a0,85
+8000003c:	00008067          	ret
+
+80000040 <hang>:
+80000040:	0000006f          	j	80000040 <hang>

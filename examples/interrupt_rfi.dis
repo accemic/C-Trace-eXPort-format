@@ -1,0 +1,28 @@
+
+interrupt_rfi.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+80000000 <_start>:
+80000000:	00000297          	auipc	t0,0x0
+80000004:	02428293          	add	t0,t0,36 # 80000024 <trap_vector>
+80000008:	30529073          	csrw	mtvec,t0
+8000000c:	4305                	li	t1,1
+8000000e:	00030563          	beqz	t1,80000018 <after_trap>
+80000012:	0001                	nop
+80000014:	00000073          	ecall
+
+80000018 <after_trap>:
+80000018:	4501                	li	a0,0
+8000001a:	05d00893          	li	a7,93
+8000001e:	00000073          	ecall
+
+80000022 <hang>:
+80000022:	a001                	j	80000022 <hang>
+
+80000024 <trap_vector>:
+80000024:	341023f3          	csrr	t2,mepc
+80000028:	0391                	add	t2,t2,4
+8000002a:	34139073          	csrw	mepc,t2
+8000002e:	30200073          	mret

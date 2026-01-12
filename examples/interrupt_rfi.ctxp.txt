@@ -1,0 +1,6 @@
+HDR:format=accemic//ctxp-txt,ver=1
+META:#0="CPU0"
+#0:SYNC::0x80000000                      @ 0
+#0:BRANCH_NOTTAKEN:0x8000000e:0x80000012 @ 12
+#0:INTERRUPT:0x80000014:0x80000024       @ 20
+#0:RFI:0x8000002e:0x80000018             @ 50

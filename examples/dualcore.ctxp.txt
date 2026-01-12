@@ -1,0 +1,15 @@
+HDR:format=accemic//ctxp-txt,ver=1
+META:#0="CPU0",#1="CPU1"
+#0:SYNC::0x80000000                              @  0
+#1:SYNC::0x80000000                              @  0
+#0:BRANCH_TAKEN:0x80000010:0x80000020            @ 14
+#1:BRANCH_NOTTAKEN:0x80000010:0x80000020         @ 11
+#1:BRANCH_TAKEN:0x80000018:0x8000003c            @ 13
+#0:CALL:0x80000024:0x80000034                    @ 21
+#0:WALLCLOCK::0x3000                             @ 21
+#1:WALLCLOCK::0x3000                             @ 32
+#0:RETURN:0x80000038:0x80000028                  @ 27
+#1:CALL:0x80000040:0x80000050                    @ 32
+#1:RETURN:0x80000054:0x80000044                  @ 34
+#0:INTERRUPT:0x8000004c:0x80000060               @ 29
+#1:INTERRUPT:0x8000004c:0x80000060               @ 42

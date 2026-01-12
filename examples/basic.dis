@@ -1,0 +1,38 @@
+
+basic.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+80000000 <_start>:
+80000000:	00000e17          	auipc	t3,0x0
+80000004:	036e0e13          	add	t3,t3,54 # 80000036 <hang>
+80000008:	305e1073          	csrw	mtvec,t3
+8000000c:	4285                	li	t0,1
+8000000e:	4305                	li	t1,1
+80000010:	00628363          	beq	t0,t1,80000016 <_start+0x16>
+80000014:	0001                	nop
+80000016:	2015                	jal	8000003a <foo>
+80000018:	00000397          	auipc	t2,0x0
+8000001c:	00c38393          	add	t2,t2,12 # 80000024 <target_indirect>
+80000020:	00038067          	jr	t2
+
+80000024 <target_indirect>:
+80000024:	4281                	li	t0,0
+80000026:	4305                	li	t1,1
+80000028:	00628863          	beq	t0,t1,80000038 <skipped>
+
+8000002c <exit>:
+8000002c:	4501                	li	a0,0
+8000002e:	05d00893          	li	a7,93
+80000032:	00000073          	ecall
+
+80000036 <hang>:
+80000036:	a001                	j	80000036 <hang>
+
+80000038 <skipped>:
+80000038:	bfd5                	j	8000002c <exit>
+
+8000003a <foo>:
+8000003a:	02a00513          	li	a0,42
+8000003e:	8082                	ret

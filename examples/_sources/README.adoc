@@ -1,0 +1,40 @@
+= Example sources
+
+This directory contains RISC-V assembly sources (`.S`) that serve as provenance for the
+example CTXP traces in link:../README.adoc[`examples/`].
+
+The `basic`, `dualcore`, and `overflow` examples include prebuilt `.elf` and `.dis` files.
+Other examples currently provide `.S` sources only.
+
+== Rebuilding `.elf` / `.dis` (optional)
+
+=== Via Docker (recommended)
+
+From the repository root:
+
+[source,sh]
+----
+make examples-build-docker
+make examples-verify
+----
+
+This builds a small Docker image containing a RISC-V bare-metal toolchain and generates:
+
+* `examples/_sources/*.elf`
+* `examples/*.dis`
+
+=== Via a host toolchain
+
+If you have a RISC-V GCC toolchain installed (e.g. `riscv64-unknown-elf-gcc`) you can rebuild an
+ELF and disassembly like this (RV32IMAC shown as a reasonable default; adjust as needed):
+
+[source,sh]
+----
+riscv64-unknown-elf-gcc -march=rv32imac_zicsr -mabi=ilp32 -nostdlib -Wl,-Ttext=0x80000000 \
+  -o example.elf example.S
+
+riscv64-unknown-elf-objdump -d example.elf > example.dis
+----
+
+Note: the exact memory map, interrupt setup, and environment (bare-metal vs Linux vs QEMU)
+affects the resulting addresses and control-flow.

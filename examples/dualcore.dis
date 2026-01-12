@@ -1,0 +1,44 @@
+
+dualcore.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+80000000 <_start>:
+80000000:	00000e17          	auipc	t3,0x0
+80000004:	060e0e13          	add	t3,t3,96 # 80000060 <hang>
+80000008:	305e1073          	csrw	mtvec,t3
+8000000c:	f14022f3          	csrr	t0,mhartid
+80000010:	00028863          	beqz	t0,80000020 <core0_entry>
+80000014:	00100313          	li	t1,1
+80000018:	02628263          	beq	t0,t1,8000003c <core1_entry>
+8000001c:	03c0006f          	j	80000058 <unknown_hart>
+
+80000020 <core0_entry>:
+80000020:	00000097          	auipc	ra,0x0
+80000024:	014080e7          	jalr	20(ra) # 80000034 <core0_func>
+80000028:	00000513          	li	a0,0
+8000002c:	05d00893          	li	a7,93
+80000030:	00000073          	ecall
+
+80000034 <core0_func>:
+80000034:	0c000513          	li	a0,192
+80000038:	00008067          	ret
+
+8000003c <core1_entry>:
+8000003c:	00000097          	auipc	ra,0x0
+80000040:	014080e7          	jalr	20(ra) # 80000050 <core1_func>
+80000044:	00000513          	li	a0,0
+80000048:	05d00893          	li	a7,93
+8000004c:	00000073          	ecall
+
+80000050 <core1_func>:
+80000050:	0c100513          	li	a0,193
+80000054:	00008067          	ret
+
+80000058 <unknown_hart>:
+80000058:	10500073          	wfi
+8000005c:	ffdff06f          	j	80000058 <unknown_hart>
+
+80000060 <hang>:
+80000060:	0000006f          	j	80000060 <hang>

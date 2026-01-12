@@ -1,0 +1,8 @@
+HDR:format=accemic//ctxp-txt,ver=1
+META:#0="CPU0"
+#0:SYNC::0x80000000                            @  0
+#0:BRANCH_TAKEN:0x80000010:0x80000016          @  3
+#0:CALL:0x80000016:0x8000003a                  @  5
+#0:RETURN:0x8000003e:0x80000018                @ 17
+#0:BRANCH_TAKEN:0x80000020:0x80000024          @ 20
+#0:BRANCH_NOTTAKEN:0x80000028:0x8000002c       @ 28
