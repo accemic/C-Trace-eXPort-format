@@ -46,10 +46,6 @@ for the full set of curated example traces and explanations.
 
 The authoritative format specification is in link:spec/TN_CTXP_Format.pdf[`spec/TN_CTXP_Format.pdf`].
 
-Repository-specific documentation (examples + tooling):
-
-* link:examples/README.adoc[Examples]
-
 == Tooling (Accemic)
 
 Accemic provides a CTXP exporter/decoder tool for converting native hardware trace formats to CTXP and
