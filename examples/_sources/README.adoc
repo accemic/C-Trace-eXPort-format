@@ -3,8 +3,8 @@
 This directory contains RISC-V assembly sources (`.S`) that serve as provenance for the
 example CTXP traces in link:../README.adoc[`examples/`].
 
-The `basic`, `dualcore`, and `overflow` examples include prebuilt `.elf` and `.dis` files.
-Other examples currently provide `.S` sources only.
+Every example ships prebuilt `.elf` and `.dis` files alongside its `.S` source, so the
+disassembly referenced by each trace is available without rebuilding.
 
 == Rebuilding `.elf` / `.dis` (optional)
 
