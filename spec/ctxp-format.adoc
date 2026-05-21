@@ -7,7 +7,7 @@ The CTXP file format defines a unified format for processor trace data: control-
 In principle, the format lifts native bit-compressed hardware traces like RISC-V C-Trace, ARM CoreSight ETMv4 or TriCore MCDS, etc. into a uniform byte-level event stream, that is easier to digest for trace analyzers. Although similar vendor-specific formats exist, no public available format has yet been defined, unlike the CTXP format.
 
 .CTXP format provides a unified input for trace analyzers.
-image::images/ctxp-conversion-process.png[]
+image::images/ctxp-conversion-process.drawio.png[]
 
 *Key Features:*
 
@@ -31,7 +31,7 @@ Typical use cases for trace analyzers include post-mortem debugging, performance
 
 The data model is equal for text and binary encoding.
 
-image::images/data-model.png[]
+image::images/data-model.drawio.png[]
 
 .Each field in the data model has a defined type.
 [%header]
@@ -320,7 +320,7 @@ enum class EventType : uint8_t
 == Example
 
 .The CTXP trace allows reconstructing the path taken through the example program by a single CPU core.
-image::images/ctxp-example.png[]
+image::images/ctxp-example.drawio.png[]
 
 Explanation:
 
@@ -335,7 +335,7 @@ Cross-source synchronization is the process of bringing events from two or more 
 The `WALLCLOCK` events serve as anchor for all sources. The associated `cycle_clock` defines the offset to each source timing.
 
 .Cross-source synchronization allows to determine which events happened before others. Often, sources and wall clock run on different frequencies.
-image::images/ctxp-cross-source-sync.png[]
+image::images/ctxp-cross-source-sync.drawio.png[]
 
 The following steps are required for the synchronization:
 

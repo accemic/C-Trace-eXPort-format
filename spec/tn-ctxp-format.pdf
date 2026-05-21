@@ -2,11 +2,11 @@
 %ÿÿÿÿ
 1 0 obj
 << /Title (Technical Note: CTXP Format)
-/Author (Version 1.1.0 ~ Build b1d7f03)
-/Creator (Version 1.1.0 ~ Build b1d7f03)
+/Author (Version 1.1.0 ~ Build 68d5567)
+/Creator (Version 1.1.0 ~ Build 68d5567)
 /Producer (Asciidoctor PDF 2.3.24, based on Prawn 2.4.0)
 /ModDate (D:20260521121104+00'00')
-/CreationDate (D:20260521121625+00'00')
+/CreationDate (D:20260521124233+00'00')
 >>
 endobj
 2 0 obj
@@ -81,9 +81,9 @@ ET
 0.09412 0.09412 0.09412 SCN
 
 BT
-368.36876 302.74493 Td
+366.60076 302.74493 Td
 /F1.0 13 Tf
-[<56> 60.05859 <657273696f6e20312e312e30207e204275696c642062316437663033>] TJ
+[<56> 60.05859 <657273696f6e20312e312e30207e204275696c642036386435353637>] TJ
 ET
 
 0.0 0.0 0.0 SCN
