@@ -30,9 +30,9 @@ META:#0="CPU0"
 == Event types (excerpt)
 
 * Control-flow: `SYNC`, `BRANCH_TAKEN`, `BRANCH_NOTTAKEN`, `CALL`, `RETURN`, `INTERRUPT`, `RFI`
-* Memory: `MEMREAD_0/1/2/4/8`, `MEMWRITE_0/1/2/4/8`
+* Memory: `MEMREAD_0/1/2/4/8`, `MEMWRITE_0/1/2/4/8` (the address is optional on the sized variants — omit it for a value-only capture)
 * Other: `OVERFLOW`, `CONTEXT`, `WALLCLOCK`
-* Instrumentation / DAQ (user-generated): `DAQ_DATA`, `DAQ_COUNTER`, `DAQ_LAST_PC`
+* Instrumentation / DAQ (user-generated): `DAQ_DATA` (DirectData tag), `DAQ_COUNTER`, `DAQ_LAST_PC`
 
 == Examples
 

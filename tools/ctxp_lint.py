@@ -48,16 +48,18 @@ EVENT_PAYLOAD_KIND: Dict[str, Tuple[Optional[bool], bool]] = {
     "RETURN": (True, True),
     "INTERRUPT": (True, True),
     "RFI": (True, True),
+    # Sized accesses: addr (value1) optional — omitted = value-only capture (native DATA).
+    # _0 accesses keep a required addr and no value.
     "MEMWRITE_0": (True, False),
-    "MEMWRITE_1": (True, True),
-    "MEMWRITE_2": (True, True),
-    "MEMWRITE_4": (True, True),
-    "MEMWRITE_8": (True, True),
+    "MEMWRITE_1": (None, True),
+    "MEMWRITE_2": (None, True),
+    "MEMWRITE_4": (None, True),
+    "MEMWRITE_8": (None, True),
     "MEMREAD_0": (True, False),
-    "MEMREAD_1": (True, True),
-    "MEMREAD_2": (True, True),
-    "MEMREAD_4": (True, True),
-    "MEMREAD_8": (True, True),
+    "MEMREAD_1": (None, True),
+    "MEMREAD_2": (None, True),
+    "MEMREAD_4": (None, True),
+    "MEMREAD_8": (None, True),
     "OVERFLOW": (False, False),
     "CONTEXT": (False, True),
     "WALLCLOCK": (False, True),
@@ -65,8 +67,7 @@ EVENT_PAYLOAD_KIND: Dict[str, Tuple[Optional[bool], bool]] = {
     "INFO_2": (False, True),
     "INFO_3": (False, True),
     # Instrumentation / DAQ events (exporter-synthesized from native ACT-CAP messages).
-    # value2 carries packed metadata (context + DirectData tag / counter kind+region).
-    "DAQ_DATA": (None, True),     # value1 = data value (optional); value2 = {ctx, tag}
+    "DAQ_DATA": (False, True),    # value2 = DirectData (24-bit user tag); tag-only carrier
     "DAQ_COUNTER": (True, True),  # value1 = counter value; value2 = {kind, region, tag_hi}
     "DAQ_LAST_PC": (False, True), # value2 = previous PC before exception/interrupt
 }

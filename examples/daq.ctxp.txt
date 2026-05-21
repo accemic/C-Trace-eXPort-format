@@ -2,13 +2,12 @@ HDR:format=accemic//ctxp-txt,ver=1
 META:#0="CPU0"
 #0:SYNC::0x80000000                  @  0
 #0:CALL:0x8000000c:0x80000018        @  3
-#0:DAQ_DATA::0x42123456              @  7
+#0:DAQ_DATA::0x00123456              @  7
 #0:MEMWRITE_4:0x70000040:0x0000002a  @  7
-#0:DAQ_DATA::0x02123456              @  9
 #0:MEMREAD_0:0x70000040:             @  9
 #0:RETURN:0x8000002c:0x8000000e      @ 12
 #0:DAQ_DATA::0x0000abcd              @ 14
-#0:DAQ_DATA:0x000000ff:0x00000042    @ 16
+#0:MEMREAD_1::0x000000ff             @ 16
 #0:DAQ_COUNTER:0x00000010:0x001a00ab @ 18
 #0:DAQ_DATA::0x00007777              @ 25
 #0:DAQ_LAST_PC::0x80000012           @ 25
