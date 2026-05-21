@@ -1,0 +1,40 @@
+name: spec-pdf
+
+on:
+  push:
+    paths:
+      - 'spec/**'
+      - '.github/workflows/pdf.yml'
+  pull_request:
+    paths:
+      - 'spec/**'
+      - '.github/workflows/pdf.yml'
+  workflow_dispatch:
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install asciidoctor-pdf
+        run: gem install --no-document asciidoctor-pdf rouge
+
+      - name: Build CTXP spec PDF
+        run: |
+          asciidoctor-pdf \
+            -a git-commit="${GITHUB_SHA::8}" \
+            -a attribute-missing=warn \
+            --failure-level=ERROR \
+            spec/tn-ctxp-format.adoc \
+            -o spec/tn-ctxp-format.pdf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tn-ctxp-format-pdf
+          path: spec/tn-ctxp-format.pdf
+          if-no-files-found: error
