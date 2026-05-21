@@ -39,8 +39,8 @@ EVENT_RE = re.compile(
 META_ENTRY_RE = re.compile(r"#(?P<sid>\d{1,3})=\"(?P<name>(?:\\.|[^\\\"])*)\"")
 
 
-EVENT_PAYLOAD_KIND: Dict[str, Tuple[bool, bool]] = {
-    # (has_v1, has_v2)
+# (has_v1, has_v2): True = required, False = forbidden, None = optional
+EVENT_PAYLOAD_KIND: Dict[str, Tuple[Optional[bool], bool]] = {
     "SYNC": (False, True),
     "BRANCH_TAKEN": (True, True),
     "BRANCH_NOTTAKEN": (True, True),
@@ -64,6 +64,11 @@ EVENT_PAYLOAD_KIND: Dict[str, Tuple[bool, bool]] = {
     "INFO_1": (False, True),
     "INFO_2": (False, True),
     "INFO_3": (False, True),
+    # Instrumentation / DAQ events (exporter-synthesized from native ACT-CAP messages).
+    # value2 carries packed metadata (context + DirectData tag / counter kind+region).
+    "DAQ_DATA": (None, True),     # value1 = data value (optional); value2 = {ctx, tag}
+    "DAQ_COUNTER": (True, True),  # value1 = counter value; value2 = {kind, region, tag_hi}
+    "DAQ_LAST_PC": (False, True), # value2 = previous PC before exception/interrupt
 }
 
 @dataclass
@@ -193,14 +198,14 @@ def lint_file(path: Path) -> List[Issue]:
 
         exp_v1, exp_v2 = EVENT_PAYLOAD_KIND[typ]
 
-        # payload presence checks
-        if exp_v1 and v1 is None:
+        # payload presence checks (True = required, False = forbidden, None = optional)
+        if exp_v1 is True and v1 is None:
             issues.append(Issue("error", path, idx, f"{typ} requires value1"))
-        if (not exp_v1) and v1 is not None:
+        if exp_v1 is False and v1 is not None:
             issues.append(Issue("error", path, idx, f"{typ} must not have value1 (use '::{v1}' with empty value1 slot)"))
-        if exp_v2 and v2 is None:
+        if exp_v2 is True and v2 is None:
             issues.append(Issue("error", path, idx, f"{typ} requires value2"))
-        if (not exp_v2) and v2 is not None:
+        if exp_v2 is False and v2 is not None:
             issues.append(Issue("warn", path, idx, f"{typ} should not have value2"))
 
         # source id appears without name is fine, but warn for examples

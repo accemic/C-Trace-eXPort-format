@@ -32,6 +32,7 @@ META:#0="CPU0"
 * Control-flow: `SYNC`, `BRANCH_TAKEN`, `BRANCH_NOTTAKEN`, `CALL`, `RETURN`, `INTERRUPT`, `RFI`
 * Memory: `MEMREAD_0/1/2/4/8`, `MEMWRITE_0/1/2/4/8`
 * Other: `OVERFLOW`, `CONTEXT`, `WALLCLOCK`
+* Instrumentation / DAQ (user-generated): `DAQ_DATA`, `DAQ_COUNTER`, `DAQ_LAST_PC`
 
 == Examples
 
@@ -41,6 +42,7 @@ for the full set of curated example traces and explanations.
 * link:examples/basic.ctxp.txt[`examples/basic.ctxp.txt`] (+ link:examples/basic.md[explanation])
 * link:examples/dualcore.ctxp.txt[`examples/dualcore.ctxp.txt`] (+ link:examples/dualcore.md[explanation])
 * link:examples/overflow.ctxp.txt[`examples/overflow.ctxp.txt`] (+ link:examples/overflow.md[explanation])
+* link:examples/daq.ctxp.txt[`examples/daq.ctxp.txt`] (+ link:examples/daq.md[explanation])
 
 == Documentation
 
