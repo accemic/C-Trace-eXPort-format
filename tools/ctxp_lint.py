@@ -39,8 +39,8 @@ EVENT_RE = re.compile(
 META_ENTRY_RE = re.compile(r"#(?P<sid>\d{1,3})=\"(?P<name>(?:\\.|[^\\\"])*)\"")
 
 
-EVENT_PAYLOAD_KIND: Dict[str, Tuple[bool, bool]] = {
-    # (has_v1, has_v2)
+# (has_v1, has_v2): True = required, False = forbidden, None = optional
+EVENT_PAYLOAD_KIND: Dict[str, Tuple[Optional[bool], bool]] = {
     "SYNC": (False, True),
     "BRANCH_TAKEN": (True, True),
     "BRANCH_NOTTAKEN": (True, True),
@@ -48,22 +48,28 @@ EVENT_PAYLOAD_KIND: Dict[str, Tuple[bool, bool]] = {
     "RETURN": (True, True),
     "INTERRUPT": (True, True),
     "RFI": (True, True),
+    # Sized accesses: addr (value1) optional — omitted = value-only capture (native DATA).
+    # _0 accesses keep a required addr and no value.
     "MEMWRITE_0": (True, False),
-    "MEMWRITE_1": (True, True),
-    "MEMWRITE_2": (True, True),
-    "MEMWRITE_4": (True, True),
-    "MEMWRITE_8": (True, True),
+    "MEMWRITE_1": (None, True),
+    "MEMWRITE_2": (None, True),
+    "MEMWRITE_4": (None, True),
+    "MEMWRITE_8": (None, True),
     "MEMREAD_0": (True, False),
-    "MEMREAD_1": (True, True),
-    "MEMREAD_2": (True, True),
-    "MEMREAD_4": (True, True),
-    "MEMREAD_8": (True, True),
+    "MEMREAD_1": (None, True),
+    "MEMREAD_2": (None, True),
+    "MEMREAD_4": (None, True),
+    "MEMREAD_8": (None, True),
     "OVERFLOW": (False, False),
     "CONTEXT": (False, True),
     "WALLCLOCK": (False, True),
     "INFO_1": (False, True),
     "INFO_2": (False, True),
     "INFO_3": (False, True),
+    # Instrumentation / DAQ events (exporter-synthesized from native ACT-CAP messages).
+    "DAQ_DATA": (False, True),    # value2 = DirectData (24-bit user tag); tag-only carrier
+    "DAQ_COUNTER": (True, True),  # value1 = counter value; value2 = {kind, region, tag_hi}
+    "DAQ_LAST_PC": (False, True), # value2 = previous PC before exception/interrupt
 }
 
 @dataclass
@@ -193,14 +199,14 @@ def lint_file(path: Path) -> List[Issue]:
 
         exp_v1, exp_v2 = EVENT_PAYLOAD_KIND[typ]
 
-        # payload presence checks
-        if exp_v1 and v1 is None:
+        # payload presence checks (True = required, False = forbidden, None = optional)
+        if exp_v1 is True and v1 is None:
             issues.append(Issue("error", path, idx, f"{typ} requires value1"))
-        if (not exp_v1) and v1 is not None:
+        if exp_v1 is False and v1 is not None:
             issues.append(Issue("error", path, idx, f"{typ} must not have value1 (use '::{v1}' with empty value1 slot)"))
-        if exp_v2 and v2 is None:
+        if exp_v2 is True and v2 is None:
             issues.append(Issue("error", path, idx, f"{typ} requires value2"))
-        if (not exp_v2) and v2 is not None:
+        if exp_v2 is False and v2 is not None:
             issues.append(Issue("warn", path, idx, f"{typ} should not have value2"))
 
         # source id appears without name is fine, but warn for examples

@@ -1,0 +1,27 @@
+
+daq.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+80000000 <_start>:
+80000000:	00000e17          	auipc	t3,0x0
+80000004:	02ee0e13          	add	t3,t3,46 # 8000002e <trap_handler>
+80000008:	305e1073          	csrw	mtvec,t3
+8000000c:	2031                	jal	80000018 <measured>
+8000000e:	05d00893          	li	a7,93
+80000012:	00000073          	ecall
+
+80000016 <hang>:
+80000016:	a001                	j	80000016 <hang>
+
+80000018 <measured>:
+80000018:	700002b7          	lui	t0,0x70000
+8000001c:	04028293          	add	t0,t0,64 # 70000040 <_start-0xfffffc0>
+80000020:	02a00313          	li	t1,42
+80000024:	0062a023          	sw	t1,0(t0)
+80000028:	0002a503          	lw	a0,0(t0)
+8000002c:	8082                	ret
+
+8000002e <trap_handler>:
+8000002e:	b7e5                	j	80000016 <hang>
