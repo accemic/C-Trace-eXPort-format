@@ -11,7 +11,7 @@ This repository aims to be a *publication-quality* reference for the CTXP format
 * Canonical, curated examples
 * A small linter to keep examples consistent
 
-The authoritative specification is included in link:spec/TN_CTXP_Format.pdf[`spec/TN_CTXP_Format.pdf`].
+The authoritative specification is included in link:spec/tn-ctxp-format.pdf[`spec/tn-ctxp-format.pdf`]. 
 
 == Quick start
 
@@ -46,7 +46,7 @@ for the full set of curated example traces and explanations.
 
 == Documentation
 
-The authoritative format specification is in link:spec/TN_CTXP_Format.pdf[`spec/TN_CTXP_Format.pdf`].
+The authoritative format specification is in link:spec/tn-ctxp-format.pdf[`spec/tn-ctxp-format.pdf`].
 
 == Tooling (Accemic)
 
@@ -70,7 +70,7 @@ If you want to evaluate or integrate CTXP tooling, please contact us:
 
 == License / attribution / acknowledgement
 
-The included technical note (`spec/TN_CTXP_Format.pdf`) states it is licensed under
+The included technical note (`spec/tn-ctxp-format.pdf`) states it is licensed under
 Creative Commons Attribution 4.0 International (CC BY 4.0). See the PDF for details.
 
 The CTXP format was developed as part of the TRISTAN project, a European Union research initiative involving 46 partners to advance the RISC-V ecosystem. See https://tristan-project.eu/ for more information.
